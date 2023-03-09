@@ -6,6 +6,14 @@ module LuhnValidator
   def validate_checksum
     nums_a = number.to_s.chars.map(&:to_i)
 
-    # TODO: use the integers in nums_a to validate its last check digit
+    sum = double_alternating_digits(nums_a).sum
+
+    sum % 10 == 0
+  end
+
+  def double_alternating_digits(nums_a)
+    nums_a.reverse_each.with_index.map do |num, idx|
+      idx.odd? ? (num * 2 > 9 ? num * 2 - 9 : num * 2) : num
+    end
   end
 end
